@@ -23,6 +23,9 @@ public class WebServer {
         httpServer.createContext(path, handler);
     }
 
+    public InetSocketAddress getAddress() {
+        return httpServer.getAddress();
+    }
 
     public void start() {
         httpServer.start();
