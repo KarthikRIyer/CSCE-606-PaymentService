@@ -11,14 +11,16 @@
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+        <mongodb-driver-sync.version>4.5.1</mongodb-driver-sync.version>
+        <morphia-core.version>2.2.6</morphia-core.version>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.xerial</groupId>
-            <artifactId>sqlite-jdbc</artifactId>
-            <version>3.43.2.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.xerial</groupId>-->
+<!--            <artifactId>sqlite-jdbc</artifactId>-->
+<!--            <version>3.43.2.0</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -28,6 +30,16 @@
             <groupId>com.fasterxml.jackson.datatype</groupId>
             <artifactId>jackson-datatype-jsr310</artifactId>
             <version>2.15.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-sync</artifactId>
+            <version>${mongodb-driver-sync.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>dev.morphia.morphia</groupId>
+            <artifactId>morphia-core</artifactId>
+            <version>${morphia-core.version}</version>
         </dependency>
     </dependencies>
 

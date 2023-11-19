@@ -5,6 +5,9 @@ import com.foodapp.framework.controller.ControllerProcessor;
 import com.foodapp.framework.webserver.WebServer;
 import com.foodapp.registry.RegistryClient;
 import com.foodapp.service.*;
+import com.mongodb.client.MongoClients;
+import dev.morphia.Datastore;
+import dev.morphia.Morphia;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -22,14 +25,15 @@ public class Application {
     private static final String serviceName = "PAYMENT_SERVICE";
     private static Application instance;
 
-    private Connection connection;
     private WebServer webServer;
     private ControllerProcessor controllerProcessor;
-    private String url = "jdbc:sqlite:PaymentService.db";
 
     private String serviceRegistryURL = "http://localhost:8081";
     private RegistryClient registryClient;
     private InetSocketAddress address;
+
+    private String mongoDBURL = "mongodb+srv://kiyer:E6eTIOtcUV6RovQY@cluster0.mabavh3.mongodb.net/?retryWrites=true&w=majority";
+    private Datastore mongoDatastore = Morphia.createDatastore(MongoClients.create(mongoDBURL), "paymentservice");
 
     private PaymentController paymentController;
     private PaymentService paymentService;
@@ -51,11 +55,9 @@ public class Application {
         webServer = new WebServer(port);
         address = webServer.getAddress();
 
-        connection = DriverManager.getConnection(url);
-
         registryClient = new RegistryClient(serviceRegistryURL, serviceName, address.toString());
 
-        paymentDataAdapter = new PaymentDataAdapter(connection);
+        paymentDataAdapter = new PaymentDataAdapter(mongoDatastore);
         paymentService = new PaymentService(paymentDataAdapter);
 
         controllerProcessor = new ControllerProcessor(webServer);
